@@ -16,8 +16,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header/>
-        <Hero/>
+        {/*<Header/>
+        <Hero/>*/}
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to Just Starters!</h2>
@@ -25,6 +25,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <a href="http://localhost:5000 /products">Click here for Products</a>
       </div>
     );
   }
