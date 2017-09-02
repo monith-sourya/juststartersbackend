@@ -7,13 +7,24 @@ require('./models/Product')
 
 mongoose.connect(keys.MONGO_URI)
 
-app.get('/', (req, res) => {
-    res.send({hi: 'there'})
+const Product = mongoose.model('products')
 
-    const Product = mongoose.model('products')
-    new Product({title:'Burger', price:5}).save()
+app.get('/products', (req, res) => {
+    var items = []
 
-})
+    Product.find({}).then((products) => {
+        products.forEach(function(product) {
+            items.push(product)
+        })
+        res.send({
+            "Products": items
+        })
+    }, (e) => {
+        console.log("Failed")
+        res.send(400)
+    })
+
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT)
