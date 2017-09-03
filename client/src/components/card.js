@@ -1,33 +1,25 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {selectCard} from '../actions/index'
-import {bindActionCreators} from 'redux'
+
+import '../style/card.css'
 
 class Card extends Component {
     render()
     {
         return (
-            <div className="card-custom">
-                <div className="container-img" onClick={()=>this.props.selectCard(this.props.item)}>
-                    <img src={this.props.item.url} className="content-img"></img>
+            <div className="cardContainer">
+                <div className="cardImageContainer">
+                    <img className="cardImage" src="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"/>
+                </div>
+                <div className="cardTitle">
+                    Burger
+                </div>
+                <div className="cardSubtitle">
+                    Classic, Rich, Juicy
                 </div>
             </div>
         )
     }
 }
 
-function mapDispatchToProps(dispatch){
-    return bindActionCreators({
-        selectCard: selectCard,
-    }, dispatch)
-}
-
-function mapStateToProps(state){
-    return {
-        selectedCard: state.activeCard
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Card)
-
-//export default Card 
+export default Card

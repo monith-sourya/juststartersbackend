@@ -10,8 +10,16 @@ mongoose.connect(keys.MONGO_URI)
 const Product = mongoose.model('products')
 
 app.get('/products', (req, res) => {
+    // async () => {
+    //     const products = await Product.find({})
+    //     products.forEach(function(prod) {
+    //         items.push(product)
+    //     })
+    //     res.send({
+    //         "Products": items
+    //     })
+    // }
     var items = []
-
     Product.find({}).then((products) => {
         products.forEach(function(product) {
             items.push(product)
@@ -23,7 +31,6 @@ app.get('/products', (req, res) => {
         console.log("Failed")
         res.send(400)
     })
-
 });
 
 const PORT = process.env.PORT || 5000;
