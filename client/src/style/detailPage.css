@@ -1,0 +1,65 @@
+.detailHeader{
+    height: 200px;
+    width: 100%;
+/*    background-color: #50E3C2; */
+}
+
+.detailBody{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 7%;
+    padding-right: 7%;
+/*    background-color: #50E3C2; */
+}
+
+.detailLeft{
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+/*    background-color: lightskyblue;*/
+    margin-right: 5%;
+}
+
+.detailRight{
+    flex: 2;
+    background-color: lightgreen;
+    display: flex;
+    flex-direction: column;
+}
+
+.detailGallery{
+    flex: 5;
+    display: flex;
+    background-color: blueviolet;
+}
+
+.detailImage{
+/*    border-radius: 10px;*/
+    object-fit: cover;
+    width: 100%;
+}
+
+.detailText{
+    text-align: left;
+    flex: 3;
+/*    background-color: red;*/
+    padding-left: 2%;
+}
+
+.configContainer{
+    flex: 3;
+    background-color: azure;
+}
+
+.reviewContainer{
+    flex: 2;
+    background-color: pink;
+}
+
+.buyButton{
+    flex: 1;
+}
