@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import ProductOptions from '../components/options'
+import Header from '../containers/header'
 
 import '../style/detailPage.css'
 
@@ -9,7 +10,9 @@ class DetailPage extends Component {
     render()
     {
         return (
-            <div className="detailBody">
+            <div>
+                <Header></Header>
+                            <div className="detailBody">
                 <div className="detailLeft">
                     <div className="detailGallery">
                         <img className="detailImage" src="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"/>
@@ -28,9 +31,12 @@ class DetailPage extends Component {
                 </div>
                 <div className="detailRight">
                     <ProductOptions></ProductOptions>
-                    <div className="reviewContainer"></div>
-                    <button className="buyButton">Buy Now</button>
+                    {/*<div className="reviewContainer"></div>*/}
+                    <div className="reviewContainer">
+                        <button className="buyButton"><div className="buttonTitle">Yalla, bring it home</div><div className="buttonSubtitle">AED 56</div> </button>
+                    </div>
                 </div>
+            </div>
             </div>
         )
     }

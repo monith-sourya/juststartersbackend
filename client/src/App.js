@@ -11,16 +11,11 @@ class App extends Component {
   render() {
     return (
         <div className="App">
-        {
-            /*
             <Header/>
             <section className='cardSection'>
                 <CardContainer/>
             </section>
-            <Header/>
-            */
-        }
-        <DetailPage/>
+            <DetailPage/>
         
         </div>
         

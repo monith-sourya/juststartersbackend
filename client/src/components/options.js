@@ -4,6 +4,20 @@ import { RadioGroup, RadioButton } from 'react-radio-buttons'
 
 var configs = [
     {
+        title: "Choose you Serving",
+        options: [{
+            subtitle: "For 4",
+            price: 0
+        },{
+            subtitle: "For 8",
+            price: 20
+        },{
+            subtitle: "For 16",
+            price: 40
+        }
+        ]
+    },
+    {
         title: "Pick a Meat",
         options: [{
             subtitle: "Chicken",
@@ -18,7 +32,7 @@ var configs = [
         ]
     },
     {
-        title: "Pick Sides",
+        title: "Pick Side",
         options: [{
             subtitle: "Fries",
             price: 10
@@ -49,7 +63,7 @@ function generateList(){
             <div>
             <div className="optionTitle">{option.title}</div>
             <RadioGroup className="configContainer" horizontal>
-                {generateRadio(option.options)}
+                {generateRadio(option.options, option.title)}
             </RadioGroup>
             </div>
         ) 
@@ -57,11 +71,11 @@ function generateList(){
     return list
 }
 
-function generateRadio(opt){
+function generateRadio(opt, title){
     var list = []
     for (var i in opt){
         list.push(
-            <RadioButton padding="10" iconSize="0" iconInnerSize="0" value="apple">
+            <RadioButton padding="10" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value={title}>
                 {opt[i].subtitle}<br/>+ AED {opt[i].price}
             </RadioButton>
         )
@@ -78,7 +92,7 @@ class ProductOptions extends Component {
                 <div className="confTitle">Configure your Burger:</div>
                 {generateList()}
                 <div className="optionTitle">Anything else?</div>
-                <textarea></textarea>
+                <textarea className="textArea"></textarea>
             </div>
         )
     }
