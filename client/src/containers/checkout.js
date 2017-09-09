@@ -5,7 +5,8 @@ import '../style/checkout.css'
 import Header from '../containers/header'
 
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
-import scriptLoader from 'react-async-script-loader'
+
+import { RadioGroup, RadioButton } from 'react-radio-buttons'
 
 class Checkout extends Component {
      constructor(props) {
@@ -73,7 +74,7 @@ class Checkout extends Component {
               onBlur: () => { console.log('Blur event!'); },
               onFocus: () => { console.log('Focused!'); },
               autoFocus: true,
-              placeholder: "Dubai",
+              placeholder: "Enter your building or neighborhood",
               name: 'Demo__input',
               id: "my-input-id",
         }
@@ -98,7 +99,7 @@ class Checkout extends Component {
                 <div className="checkout-container">
                     <div className="checkout-left">
                         <h3 className="checkout-sub">Delivery Address</h3>
-                        <div className='container'>
+                        <div className="formContainer">
                           <PlacesAutocomplete
                             onSelect={this.handleSelect}
                             autocompleteItem={AutocompleteItem}
@@ -110,18 +111,31 @@ class Checkout extends Component {
                             {!this.state.loading && this.state.geocodeResults ?
                             <div className='geocoding-results'>{this.state.geocodeResults}</div> :
                               null}
+                            <input className="checkout-input" type="text" placeholder="Villa/Flat No."></input>
+                            <input className="checkout-input" type="text" placeholder="Street"></input>
+                        </div>                       
+                        <h3 className="checkout-sub">Contact Details</h3>
+                        <div className="formContainer">
+                            <input className="checkout-input" type="text" placeholder="Mobile Number"></input>
+                            <input className="checkout-input" type="text" placeholder="Email Address"></input>
                         </div>
-                        <input type="text" placeholder="Street"></input>
-                        <input type="text" placeholder="Landmark"></input>
-                        <h3>Delivery Time</h3> 
-                        <h3>Contact Details</h3> 
-                        <h3>Payment Method</h3> 
-                    </div>
+                        <h3 className="checkout-sub">Delivery Time</h3>
+                        <RadioGroup className="configContainer" horizontal>
+                            <RadioButton padding="10" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="time">As Soon as Possible
+                            </RadioButton>
+                            <RadioButton padding="10" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="time">
+                                <input></input>
+                            </RadioButton> 
+                        </RadioGroup>    
+                        <div className="formContainer">
+                            
+                        </div>
+                        <h3 className="checkout-sub">Payment Method</h3> 
+                        </div>
                     <div className="checkout-right">
                         Hi
                     </div>
                 </div>
-                
             </div>
         )
     }
