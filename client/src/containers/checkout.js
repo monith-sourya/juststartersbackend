@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 
 import '../style/checkout.css'
 import Header from '../containers/header'
+import OrderSummary from '../components/orderSummary'
 
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
@@ -113,7 +114,7 @@ class Checkout extends Component {
                               null}
                             <input className="checkout-input" type="text" placeholder="Villa/Flat No."></input>
                             <input className="checkout-input" type="text" placeholder="Street"></input>
-                        </div>                       
+                        </div>   
                         <h3 className="checkout-sub">Contact Details</h3>
                         <div className="formContainer">
                             <input className="checkout-input" type="text" placeholder="Mobile Number"></input>
@@ -133,7 +134,7 @@ class Checkout extends Component {
                         <h3 className="checkout-sub">Payment Method</h3> 
                         </div>
                     <div className="checkout-right">
-                        Hi
+                        <OrderSummary></OrderSummary>
                     </div>
                 </div>
             </div>
