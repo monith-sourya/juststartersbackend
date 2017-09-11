@@ -1,13 +1,15 @@
 .checkout{
     padding-top: 2%;
     padding-bottom: 2%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 15%;
+    padding-right: 15%;
+    font-weight: 200;
 }
 
 .checkout-header{
     width: 100%;
     text-align: left;
+    font-weight: 600;
 }
 
 h3{
@@ -22,19 +24,15 @@ h3{
 
 .checkout-left{
 /*    background-color: lightgrey;*/
-    flex:1;
+    flex: 1.25;
     display: flex;
     flex-direction: column;
-    padding-right: 20%;
+    padding-right: 15%;
 /*    width: 50%;*/
 }
 
-.checkout-right{
-/*    background-color: lightgoldenrodyellow;*/
-    flex: 1;
-}
-
 .checkout-sub{
+    font-weight: 400;
     padding-bottom: 5px;
 }
 
@@ -78,12 +76,16 @@ input{
     width: 100px;
 }
 
+.inCheckout{
+/*    flex-direction: column;*/
+}
+
 .Demo__autocomplete-container {
   border-bottom: honeydew;
   border-left: honeydew;
   border-right: honeydew;
   width: 100%;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 1px;
   border-top: 1px solid #e6e6e6;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
