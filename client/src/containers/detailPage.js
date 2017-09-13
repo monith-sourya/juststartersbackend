@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import ProductOptions from '../components/options'
-import Header from '../containers/header'
+import Header from '../containers/detailHeader'
 
 import '../style/detailPage.css'
 

@@ -1,11 +1,11 @@
 import React from 'react'
 import '../style/detailPage.css'
 
-const Header = () => {
+const DetailHeader = () => {
     return(
         <div className='detailHeader'>
         </div>   
     )
 }
 
-export default Header
+export default DetailHeader

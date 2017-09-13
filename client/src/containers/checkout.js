@@ -2,9 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import '../style/checkout.css'
-import Header from '../containers/header'
+import DetailHeader from '../containers/detailHeader'
 import OrderSummary from '../components/orderSummary'
-import TimeComponent from '../components/timepicker'
+
 
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
@@ -78,7 +78,7 @@ class Checkout extends Component {
         const onChange = (dateString, { dateMoment, timestamp }) => {
             console.log(dateString)
         }
- 
+    
         let date = '2017-04-24'
 
         const inputProps = {
@@ -101,14 +101,71 @@ class Checkout extends Component {
             </div>
         )
         
-         const cssClasses = {
+        function genHrs(){         
+             var hrs = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"]
+
+             var list = []
+             
+             for (var i in hrs){
+                 list.push(
+                    <option value={hrs[i]}>{hrs[i]}</option>
+                 )
+             }
+             return list
+         }
+    
+        function genMins(){         
+                 var mins = ["00", "15", "30", "45"]
+                 var list = []
+
+                 for (var i in mins){
+                     list.push(
+                        <option value={mins[i]}>{mins[i]}</option>
+                     )
+                 }
+                 return list
+        }
+        
+        function genDays(){         
+                 var days = ["Today", "Tomorrow", "Day After Tomorrow"]
+                 var list = []
+
+                 for (var i in days){
+                     list.push(
+                        <option value={days[i]}>{days[i]}</option>
+                     )
+                 }
+                 return list
+        }
+        
+        function genForm(){
+            return (
+             <div className="timeForm">
+                <form>
+                    <select name="hr">
+                        {genHrs()}
+                    </select>
+                    <select name="min">
+                        {genMins()}
+                    </select>
+                    <select className="coDay" name="day">
+                        {genDays()}
+                    </select>
+               </form>
+            </div> 
+            )
+        }
+        
+        const cssClasses = {
                 root: 'form-group',
                 input: 'Demo__search-input',
                 autocompleteContainer: 'Demo__autocomplete-container',
         }
-        
+         
         return (
-            <div className="checkout">
+            <div>
+                <DetailHeader></DetailHeader>
+                <div className="checkout">
                 <h1 className="checkout-header">Confirm your order</h1>
                 <div className="checkout-container">
                     <div className="checkout-left">
@@ -134,21 +191,32 @@ class Checkout extends Component {
                             <input className="checkout-input" type="text" placeholder="Email Address"></input>
                         </div>
                         <h3 className="checkout-sub">Delivery Time</h3>
-                        <RadioGroup className="inCheckout" vertical onChange={this.handleRadioChange}>
-                            <RadioButton last="false"  padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="ASAP">
+                        <RadioGroup className="inCheckout" horizontal onChange={this.handleRadioChange}>
+                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="ASAP">
                                 As Soon As Possible
                             </RadioButton>
                             <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="Advance">
                                 Order in Advance
                             </RadioButton>
                         </RadioGroup>
-                         {this.state.radioButton == "Advance" ? <div><h5>Pick a Time</h5><TimeComponent></TimeComponent></div> : <p></p>}
+                         {this.state.radioButton == "Advance" ? 
+                            genForm()
+                            : <div/>}
                         <div className="formContainer">
                         </div>
-                        <h3 className="checkout-sub">Payment Method</h3> 
+                        <h3 className="checkout-sub">Payment Method</h3>
+                        <RadioGroup className="inCheckout" horizontal onChange={this.handleRadioChange}>
+                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="Cash">
+                                Cash On Delivery
+                            </RadioButton>
+                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="Card">
+                                Pay by Card
+                            </RadioButton>
+                        </RadioGroup>
                         </div>
                     <div className="checkout-right">
                         <OrderSummary></OrderSummary>
+                    </div>
                     </div>
                 </div>
             </div>
