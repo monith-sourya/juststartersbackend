@@ -20,20 +20,23 @@ var configs = [
     {
         title: "Pick a Meat",
         options: [{
+            subtitle: "No thanks",
+            price: 0
+        },{
             subtitle: "Chicken",
             price: 10
         },{
             subtitle: "Vegetarian",
             price: 4
-        },{
-            subtitle: "No thanks",
-            price: 0
         }
         ]
     },
     {
-        title: "Pick Side",
+        title: "Add a Side",
         options: [{
+            subtitle: "No thanks",
+            price: 0
+        },{
             subtitle: "Fries",
             price: 10
         },{
@@ -43,8 +46,11 @@ var configs = [
         ]
     },
     {
-        title: "Pick a Drink",
+        title: "Add a Drink",
         options: [{
+            subtitle: "No thanks",
+            price: 0
+        },{
             subtitle: "Coke",
             price: 10
         },{
@@ -55,44 +61,76 @@ var configs = [
     }
 ]
 
-function generateList(){
-    var list = []  
-    for (var i in configs){
-        var option = configs[i]
-        list.push(
-            <div>
-            <div className="optionTitle">{option.title}</div>
-            <RadioGroup className="configContainer" horizontal>
-                {generateRadio(option.options, option.title)}
-            </RadioGroup>
-            </div>
-        ) 
+class ProductOptions extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+        }
+        this.generateList = this.generateList.bind(this)
+        this.generateRadio = this.generateRadio.bind(this)
+        this.handleRadioChange = this.handleRadioChange.bind(this)
+        this.handleTextArea = this.handleTextArea.bind(this)
+        this.updateTotal = this.updateTotal.bind(this)
     }
-    return list
-}
-
-function generateRadio(opt, title){
-    var list = []
-    for (var i in opt){
-        list.push(
-            <RadioButton padding="10" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value={title}>
-                {opt[i].subtitle}<br/>+ AED {opt[i].price}
+        
+    handleRadioChange(title, e) {
+        this.setState(
+            {
+                options: {...this.state.options, [title]: e}
+            }, () => {
+                this.updateTotal()
+            }
+        );
+    }
+    
+    generateRadio(opt){
+        return opt.map((option) => (
+            <RadioButton padding="10" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value={{text: option.subtitle,
+                                                                                                  price: option.price
+                                                                                                 }}>
+                {option.subtitle}<br/>+ AED {option.price}
             </RadioButton>
+        ))
+    }
+    
+    handleTextArea(e){
+        this.setState({custom: e.target.value})
+    }
+ 
+    generateList(){
+        return configs.map((option) =>
+            (
+                <div>
+                <div className="optionTitle">{option.title}</div>
+                <RadioGroup onChange={(e) => this.handleRadioChange(option.title, e)}  className="configContainer" horizontal>
+                    {this.generateRadio(option.options)}
+                </RadioGroup>
+                </div>
+            )
         )
     }
-    return list
-}
+    
+    updateTotal(){
+        console.log("Update Total")
+        var price = 0
+        var options = this.state.options
+        for (var key in options){
+            if (options.hasOwnProperty(key)) {
+                price += options[key].price
+            }
+        }
+        this.setState({total: price})
+    }
 
-
-class ProductOptions extends Component {
+    
     render()
     {
         return (
             <div className="configContainer">
                 <div className="confTitle">Configure your Burger:</div>
-                {generateList()}
+                {this.generateList()}
                 <div className="optionTitle">Anything else?</div>
-                <textarea className="textArea"></textarea>
+                <textarea className="textArea" onChange={this.handleTextArea}></textarea>
             </div>
         )
     }
