@@ -8,7 +8,7 @@ import Checkout from './containers/checkout'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfZTTzUOX6zSmqMAI5I6cEX_r1x6tW1bM&libraries=places&region=AE"></script>
 
 class App extends Component {
   render() {

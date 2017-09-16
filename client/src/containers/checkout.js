@@ -8,6 +8,7 @@ import OrderSummary from '../components/orderSummary'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 import { RadioGroup, RadioButton } from 'react-radio-buttons'
+import { Field, reduxForm } from 'redux-form';
 
 var cart = [
     {
@@ -36,10 +37,17 @@ class Checkout extends Component {
      constructor(props) {
         super(props)
         this.state = {
-          geocodeResults: null,
-          loading: false,
-          radioButton: '',
-          address: ''
+            geocodeResults: null,
+            loading: false,
+            delivery: 'ASAP',
+            payment: 'Cash',
+            address: '',
+            mobile: '',
+            street: '',
+            flat: '',
+            deliveryDetails: {
+                hr: 0, min: 0, day: 0
+            }
         }
         this.handleRadioChange = this.handleRadioChange.bind(this)
         this.handleSelect = this.handleSelect.bind(this)
@@ -47,6 +55,8 @@ class Checkout extends Component {
         this.renderGeocodeFailure = this.renderGeocodeFailure.bind(this)
         this.renderGeocodeSuccess = this.renderGeocodeSuccess.bind(this)
         this.buildSummary = this.buildSummary.bind(this)
+        this.inputToState = this.inputToState.bind(this)
+        this.setHr = this.setHr.bind(this)
     }
 
       handleSelect(address) {
@@ -54,7 +64,6 @@ class Checkout extends Component {
           address,
           loading: true
         })
-
         geocodeByAddress(address)
           .then((results) => getLatLng(results[0]))
           .then(({ lat, lng }) => {
@@ -72,6 +81,10 @@ class Checkout extends Component {
             })
           })
       }
+    
+    inputToState(key, e){
+        this.setState({[key]: e.target.value})
+    }
 
       handleChange(address) {
         this.setState({
@@ -88,8 +101,8 @@ class Checkout extends Component {
         )
       }
     
-     handleRadioChange(value) {
-            this.setState({radioButton: value});
+     handleRadioChange(key,  value) {
+            this.setState({[key]: value});
     }
 
       renderGeocodeSuccess(lat, lng) {
@@ -116,14 +129,18 @@ class Checkout extends Component {
         return summary
     }
     
+    setHr(e){
+        var x = this.state.deliveryTime
+        x.hr = e
+           this.setState({
+               deliveryTime: x
+           })
+    }
+        
+    
     render()
     {
-        const onChange = (dateString, { dateMoment, timestamp }) => {
-            console.log(dateString)
-        }
     
-        let date = '2017-04-24'
-
         const inputProps = {
               type: "text",
               value: this.state.address,
@@ -134,6 +151,10 @@ class Checkout extends Component {
               placeholder: "Enter your building or neighborhood",
               name: 'Demo__input',
               id: "my-input-id",
+        }
+        
+        const options = {
+            componentRestrictions: {country: 'ae'}
         }
         
         const AutocompleteItem = ({ formattedSuggestion }) => (
@@ -181,17 +202,18 @@ class Checkout extends Component {
                  return list
         }
         
+        
         function genForm(){
             return (
              <div className="timeForm">
                 <form>
-                    <select name="hr">
+                    <select name="hr" onChange={this.setHr}>
                         {genHrs()}
                     </select>
-                    <select name="min">
+                    <select name="min" onChange={this.setHr}>
                         {genMins()}
                     </select>
-                    <select className="coDay" name="day">
+                    <select className="coDay" name="day" onChange={this.setHr}>
                         {genDays()}
                     </select>
                </form>
@@ -215,44 +237,46 @@ class Checkout extends Component {
                         <h3 className="checkout-sub">Delivery Address</h3>
                         <div className="formContainer">
                           <PlacesAutocomplete
-                            onSelect={this.handleSelect}
-                            autocompleteItem={AutocompleteItem}
-                            onEnterKeyDown={this.handleSelect}
-                            classNames={cssClasses}
-                            inputProps={inputProps}
+                                onSelect={this.handleSelect}
+                                autocompleteItem={AutocompleteItem}
+                                onEnterKeyDown={this.handleSelect}
+                                classNames={cssClasses}
+                                inputProps={inputProps}
+                                options={options}
                           />
                             {this.state.loading ? <div><i className="fa fa-spinner fa-pulse fa-3x fa-fw Demo__spinner" /></div> : null}
                             {!this.state.loading && this.state.geocodeResults ?
                             <div className='geocoding-results'>{this.state.geocodeResults}</div> :
                               null}
-                            <input className="checkout-input" type="text" placeholder="Villa/Flat No."></input>
-                            <input className="checkout-input" type="text" placeholder="Street"></input>
+                            
+                            <input className="checkout-input" onChange={(e) => this.inputToState("flat", e)} type="text" placeholder="Villa/Flat No."></input>
+                            <input className="checkout-input" onChange={(e) => this.inputToState("street", e)} type="text" placeholder="Street"></input>
                         </div>   
                         <h3 className="checkout-sub">Contact Details</h3>
                         <div className="formContainer">
-                            <input className="checkout-input" type="text" placeholder="Mobile Number"></input>
-                            <input className="checkout-input" type="text" placeholder="Email Address"></input>
+                            <input className="checkout-input" type="text" onChange={(e) => this.inputToState("contact", e)} placeholder="Mobile Number"></input>
+                            <input className="checkout-input" type="text" onChange={(e) => this.inputToState("email", e)} placeholder="Email Address"></input>
                         </div>
                         <h3 className="checkout-sub">Delivery Time</h3>
-                        <RadioGroup className="inCheckout" horizontal onChange={this.handleRadioChange}>
-                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="ASAP">
+                        <RadioGroup className="inCheckout" horizontal onChange={(e) => this.handleRadioChange("delivery", e)}>
+                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="asap">
                                 As Soon As Possible
                             </RadioButton>
-                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="Advance">
+                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="advance">
                                 Order in Advance
                             </RadioButton>
                         </RadioGroup>
-                         {this.state.radioButton == "Advance" ? 
+                         {this.state.delivery == "advance" ? 
                             genForm()
                             : <div/>}
                         <div className="formContainer">
                         </div>
                         <h3 className="checkout-sub">Payment Method</h3>
-                        <RadioGroup className="inCheckout" horizontal onChange={this.handleRadioChange}>
-                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="Cash">
+                        <RadioGroup className="inCheckout" horizontal onChange={(e) => this.handleRadioChange("payment", e)}>
+                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="cash">
                                 Cash On Delivery
                             </RadioButton>
-                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="Card">
+                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="card">
                                 Pay by Card
                             </RadioButton>
                         </RadioGroup>
