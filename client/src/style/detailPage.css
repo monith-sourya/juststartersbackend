@@ -40,7 +40,9 @@
 .textArea{
     resize: none;
     width: 100%;
-    height: 50px;
+    height: 60px;
+    padding: 7px;
+    box-sizing: border-box;
 }
 
 .detailImage{
@@ -62,7 +64,7 @@
 .configContainer{
 /*    background-color: white;*/
     overflow-y: auto;
-    flex: 5.5;
+/*    flex: 5.5;*/
 }
 
 
@@ -93,31 +95,33 @@
 .buyButton{
     background-color: white;
     height: 70px;
-    width: 75%;
+    width: 60%;
     font-family: 'Roboto';
     box-shadow:none;
-    border-radius: 40px;
+    border-radius: 12px;
     border: solid 2px;
     border-color: #50E3C2;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 25px;
     padding: 10px;
     text-align: center;
     color: #50E3C2;
-    padding: 10px;
 }
 
 .buttonTitle{
     flex: 2;
     font-family: 'Roboto';
-    font-weight: 400;
+    text-align: left;
+    padding-left: 10px;
+    font-weight: 200;
     font-size: 22px;
 }
 
 .buttonSubtitle{
     flex: 1;
-    font-weight: 300;
+    font-weight: 200;
     font-size: 20px;
 }
 

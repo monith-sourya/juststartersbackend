@@ -5,44 +5,53 @@ import { RadioGroup, RadioButton } from 'react-radio-buttons'
 class ProductOptions extends Component {
     constructor(props) {
         super(props)
+
+        var defaults = this.getDefaultOptions(this.props.configs)
         this.state = {
-            options:{},
-            total: 0
+            options: defaults,
+            optionsPrice: 0
         }
         this.generateList = this.generateList.bind(this)
         this.generateRadio = this.generateRadio.bind(this)
         this.handleRadioChange = this.handleRadioChange.bind(this)
         this.handleTextArea = this.handleTextArea.bind(this)
         this.updateTotal = this.updateTotal.bind(this)
-        this.radioText = this.radioText.bind(this)
+        this.getDefaultOptions = this.getDefaultOptions.bind(this)
+        this.props.passToParent(defaults, "options")
+    }
+    
+     getDefaultOptions(configs){
+        var list = {}
+        for (var i in configs){
+            var obj = configs[i].options[0]
+            obj["title"] = configs[i].title
+            list[configs[i].id] = obj
+        }
+        return list
+        console.log("List", list)
     }
         
-    handleRadioChange(title, e) {
+    handleRadioChange(title, id, e) {
+        e.title = title
         this.setState(
             {
-                options: {...this.state.options, [title]: e}
+                options: {...this.state.options, [id]: e}
             }, () => {
                 this.updateTotal()
             }
         );
     }
     
-    radioText(price){
-            return (
-                `+AED ${price}`
-            )
-        }
-    
     generateRadio(opt){
         return opt.map((option) => (
-            <RadioButton padding="10" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value={{text: option.subtitle, price: option.price}}>
+            <RadioButton padding={10} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value={{subtitle: option.subtitle, price: option.price}}>
                {option.subtitle} <br></br>+ AED {option.price}
             </RadioButton>
         ))
     }
     
     handleTextArea(e){
-        this.setState({custom: e.target.value})
+        this.props.passToParent(e.target.value, "customOption")
     }
  
     generateList(){
@@ -50,7 +59,7 @@ class ProductOptions extends Component {
             (
                 <div>
                 <div className="optionTitle">{option.title}</div>
-                <RadioGroup onChange={(e) => this.handleRadioChange(option.title, e)}  className="configContainer" horizontal>
+                <RadioGroup onChange={(e) => this.handleRadioChange(option.title, option.id, e)}  className="configContainer" horizontal>
                     {this.generateRadio(option.options)}
                 </RadioGroup>
                 </div>
@@ -67,9 +76,9 @@ class ProductOptions extends Component {
                 price += options[key].price
             }
         }
-        this.setState({total: price}, () => {
-            this.props.retrieve(this.state.options, "options")
-            this.props.retrieve(this.state.total, "total")
+        this.setState({optionsPrice: price}, () => {
+            this.props.passToParent(this.state.options, "options")
+            this.props.passToParent(this.state.optionsPrice, "optionsPrice")
         })
     }
 

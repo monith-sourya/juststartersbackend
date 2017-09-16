@@ -9,6 +9,29 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 
 import { RadioGroup, RadioButton } from 'react-radio-buttons'
 
+var cart = [
+    {
+        title: "Portobello Mushroom Burger",
+        totalPrice: 85,
+        customOption: "",
+        options: {
+            0: {subtitle: "For 4", price: 0, title: "Choose you Serving"},
+            1:  {subtitle: "Beef", price: 0, title: "Pick a Meat"},
+            2: {subtitle: "No thanks", price: 0, title: "Add a Side"}
+        }
+    },
+    {
+        title: "Samosa Chaat",
+        totalPrice: 35,
+        customOption: "",
+        options: {
+            0: {subtitle: "For 8", price: 0, title: "Choose you Serving"},
+            1:  {subtitle: "Pickle", price: 0, title: "Pick a Meat"},
+            2: {subtitle: "Coca-Cola", price: 0, title: "Add a Side"}
+        }
+    }
+]
+
 class Checkout extends Component {
      constructor(props) {
         super(props)
@@ -23,6 +46,7 @@ class Checkout extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.renderGeocodeFailure = this.renderGeocodeFailure.bind(this)
         this.renderGeocodeSuccess = this.renderGeocodeSuccess.bind(this)
+        this.buildSummary = this.buildSummary.bind(this)
     }
 
       handleSelect(address) {
@@ -71,6 +95,26 @@ class Checkout extends Component {
       renderGeocodeSuccess(lat, lng) {
         console.log(lat, lng);
       }
+    
+    buildSummary(cart){
+        var summary = []
+        cart.map((item) => {
+            var options = []
+            for (var id in item.options){
+                var opt = item.options[id]
+                if (opt.subtitle != "No thanks"){
+                    options.push(opt.subtitle)
+                }
+            }
+            var singleSummary = {
+                title: item.title,
+                price: item.totalPrice,
+                options: options
+            }
+            summary.push(singleSummary)
+        })
+        return summary
+    }
     
     render()
     {
@@ -191,10 +235,10 @@ class Checkout extends Component {
                         </div>
                         <h3 className="checkout-sub">Delivery Time</h3>
                         <RadioGroup className="inCheckout" horizontal onChange={this.handleRadioChange}>
-                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="ASAP">
+                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="ASAP">
                                 As Soon As Possible
                             </RadioButton>
-                            <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="Advance">
+                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="Advance">
                                 Order in Advance
                             </RadioButton>
                         </RadioGroup>
@@ -214,7 +258,7 @@ class Checkout extends Component {
                         </RadioGroup>
                         </div>
                     <div className="checkout-right">
-                        <OrderSummary></OrderSummary>
+                        <OrderSummary cart={this.buildSummary(cart)}></OrderSummary>
                     </div>
                     </div>
                 </div>

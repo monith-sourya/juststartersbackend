@@ -20,6 +20,7 @@ class App extends Component {
             </section>
             <DetailPage/>*/}
             <DetailPage/>
+            <Checkout></Checkout>
         </div>
         
     );

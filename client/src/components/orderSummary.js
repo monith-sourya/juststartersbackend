@@ -27,50 +27,54 @@ var accounts = {
     deliveryCharge: 10
 }
 
-function generateList(){
-    var list = []  
-    accounts.subtotal = 0
-    for (var i in configs){
-        var option = configs[i]
-        accounts.subtotal += option.price
-        list.push(
-            <div className="order-item-div">
-                <div className="order-title">
-                    <div className="order-name">
-                        {option.title}
-                    </div>
-                    <div className="order-price">
-                         AED{option.price}
-                    </div>
-                </div>
-                <ul className="order-details">
-                    {generateOptions(option.options)}
-                </ul>
-            </div>
-        ) 
-    }
-    return list
-}
-
-
-
-function generateOptions(opt){
-    var list = []
-    for (var i in opt){
-        list.push(
-            <li className="order">{opt[i]}</li>
-        )
-    }
-    return list
-}
-
 class OrderSummary extends Component {
+     constructor(props) {
+        super(props)
+        this.generateList = this.generateList.bind(this)
+        this.generateOptions = this.generateOptions.bind(this)
+    }
+    
+    generateList(){
+        var list = []  
+        accounts.subtotal = 0
+        for (var i in this.props.cart){
+            var option = this.props.cart[i]
+            accounts.subtotal += option.price
+            list.push(
+                <div className="order-item-div">
+                    <div className="order-title">
+                        <div className="order-name">
+                            {option.title}
+                        </div>
+                        <div className="order-price">
+                             AED{option.price}
+                        </div>
+                    </div>
+                    <ul className="order-details">
+                        {this.generateOptions(option.options)}
+                    </ul>
+                </div>
+            ) 
+        }
+    return list
+}
+
+    generateOptions(opt){
+        var list = []
+        for (var i in opt){
+            list.push(
+                <li className="order">{opt[i]}</li>
+            )
+        }
+        return list
+    }
+    
     render()
     {
         return (
         <div className="order-container">
             <h3 className="order-head">My Order</h3>
-            {generateList()}
+            {this.generateList()}
             <ul className="order-total">
                 <li className="order">
                     <div className="order-title">

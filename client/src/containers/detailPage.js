@@ -13,6 +13,7 @@ var product = {
     price: 50,
     configs: [
         {
+            id: 0,
             title: "Choose you Serving",
             options: [{
                 subtitle: "For 4",
@@ -27,6 +28,7 @@ var product = {
             ]
         },
         {
+            id: 1,
             title: "Pick a Meat",
             options: [{
                 subtitle: "No thanks",
@@ -41,6 +43,7 @@ var product = {
             ]
         },
         {
+            id: 2,
             title: "Add a Side",
             options: [{
                 subtitle: "No thanks",
@@ -55,6 +58,7 @@ var product = {
             ]
         },
         {
+            id: 3,
             title: "Add a Drink",
             options: [{
                 subtitle: "No thanks",
@@ -75,16 +79,45 @@ class DetailPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            total: 0
+            title: product.title,
+            price: product.price,
+            optionsPrice: 0,
+            totalPrice: product.price,
+            customOption: ""
         }
-        this.retrieve = this.retrieve.bind(this)
+        this.passToParent = this.passToParent.bind(this)
+        this.completeOrder = this.completeOrder.bind(this)
     }
     
-    retrieve(options, key){
+    passToParent(value, key){
         this.setState({
-            [key]: options
+            [key]: value
         })
-        console.log("Retrieve")
+        console.log("passToParent")
+        if (key == "optionsPrice"){
+            var newTotal = this.state.price + value
+            this.setState({
+                totalPrice: newTotal
+            })
+        }
+    }
+    
+    getDefaultOptions(configs){
+        var list = []
+        for (var i in configs){
+            list.push({
+                [configs[i].title]: configs[i].options[0]
+            })
+        }
+        console.log("List", list)
+    }
+    
+    completeOrder(){
+        console.log("Product added to order")
+        // Redux will pass to store
+        var order = this.state
+        console.log(order)
+        // Route to Checkout / Menu...
     }
     
     render()
@@ -95,7 +128,7 @@ class DetailPage extends Component {
                             <div className="detailBody">
                 <div className="detailLeft">
                     <div className="detailGallery">
-                        <img className="detailImage" src="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"/>
+                        <img className="detailImage" src={product.image}/>
                     </div>
                     <div className="detailText">
                         <h1 className="detailTitle">{product.title}</h1>
@@ -111,12 +144,12 @@ class DetailPage extends Component {
                 </div>
                 <div className="detailRight">
                     <ProductOptions 
-                        retrieve={this.retrieve}
+                        passToParent={this.passToParent}
                         configs={product.configs}
                         ></ProductOptions>
                     {/*<div className="reviewContainer"></div>*/}
                     <div className="reviewContainer">
-                        <button className="buyButton"><div className="buttonTitle">Yalla, bring it home</div><div className="buttonSubtitle">AED {product.price + this.state.total}</div> </button>
+                        <button className="buyButton" onClick={this.completeOrder}><div className="buttonTitle">ADD TO CART</div><div className="buttonSubtitle">AED {this.state.price + this.state.optionsPrice}</div> </button>
                     </div>
                 </div>
             </div>
