@@ -2,75 +2,19 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { RadioGroup, RadioButton } from 'react-radio-buttons'
 
-var configs = [
-    {
-        title: "Choose you Serving",
-        options: [{
-            subtitle: "For 4",
-            price: 0
-        },{
-            subtitle: "For 8",
-            price: 20
-        },{
-            subtitle: "For 16",
-            price: 40
-        }
-        ]
-    },
-    {
-        title: "Pick a Meat",
-        options: [{
-            subtitle: "No thanks",
-            price: 0
-        },{
-            subtitle: "Chicken",
-            price: 10
-        },{
-            subtitle: "Vegetarian",
-            price: 4
-        }
-        ]
-    },
-    {
-        title: "Add a Side",
-        options: [{
-            subtitle: "No thanks",
-            price: 0
-        },{
-            subtitle: "Fries",
-            price: 10
-        },{
-            subtitle: "Curly Fries",
-            price: 4
-        }
-        ]
-    },
-    {
-        title: "Add a Drink",
-        options: [{
-            subtitle: "No thanks",
-            price: 0
-        },{
-            subtitle: "Coke",
-            price: 10
-        },{
-            subtitle: "Shake",
-            price: 4
-        }
-        ]
-    }
-]
-
 class ProductOptions extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            options:{},
+            total: 0
         }
         this.generateList = this.generateList.bind(this)
         this.generateRadio = this.generateRadio.bind(this)
         this.handleRadioChange = this.handleRadioChange.bind(this)
         this.handleTextArea = this.handleTextArea.bind(this)
         this.updateTotal = this.updateTotal.bind(this)
+        this.radioText = this.radioText.bind(this)
     }
         
     handleRadioChange(title, e) {
@@ -83,12 +27,16 @@ class ProductOptions extends Component {
         );
     }
     
+    radioText(price){
+            return (
+                `+AED ${price}`
+            )
+        }
+    
     generateRadio(opt){
         return opt.map((option) => (
-            <RadioButton padding="10" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value={{text: option.subtitle,
-                                                                                                  price: option.price
-                                                                                                 }}>
-                {option.subtitle}<br/>+ AED {option.price}
+            <RadioButton padding="10" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value={{text: option.subtitle, price: option.price}}>
+               {option.subtitle} <br></br>+ AED {option.price}
             </RadioButton>
         ))
     }
@@ -98,7 +46,7 @@ class ProductOptions extends Component {
     }
  
     generateList(){
-        return configs.map((option) =>
+        return this.props.configs.map((option) =>
             (
                 <div>
                 <div className="optionTitle">{option.title}</div>
@@ -119,7 +67,10 @@ class ProductOptions extends Component {
                 price += options[key].price
             }
         }
-        this.setState({total: price})
+        this.setState({total: price}, () => {
+            this.props.retrieve(this.state.options, "options")
+            this.props.retrieve(this.state.total, "total")
+        })
     }
 
     
@@ -127,7 +78,7 @@ class ProductOptions extends Component {
     {
         return (
             <div className="configContainer">
-                <div className="confTitle">Configure your Burger:</div>
+                <div className="confTitle">Configure your Starter:</div>
                 {this.generateList()}
                 <div className="optionTitle">Anything else?</div>
                 <textarea className="textArea" onChange={this.handleTextArea}></textarea>

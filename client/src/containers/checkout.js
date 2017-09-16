@@ -5,7 +5,6 @@ import '../style/checkout.css'
 import DetailHeader from '../containers/detailHeader'
 import OrderSummary from '../components/orderSummary'
 
-
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 import { RadioGroup, RadioButton } from 'react-radio-buttons'
