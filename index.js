@@ -9,7 +9,7 @@ mongoose.connect(keys.MONGO_URI)
 
 const Product = mongoose.model('products')
 
-app.get('/products', (req, res) => {
+app.get('/db/products', (req, res) => {
     // async () => {
     //     const products = await Product.find({})
     //     products.forEach(function(prod) {

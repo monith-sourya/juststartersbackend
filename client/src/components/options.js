@@ -82,7 +82,6 @@ class ProductOptions extends Component {
         })
     }
 
-    
     render()
     {
         return (

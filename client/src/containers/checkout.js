@@ -10,6 +10,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 import { RadioGroup, RadioButton } from 'react-radio-buttons'
 import { Field, reduxForm } from 'redux-form';
 
+// Props:
 var cart = [
     {
         title: "Portobello Mushroom Burger",
@@ -40,14 +41,12 @@ class Checkout extends Component {
             geocodeResults: null,
             loading: false,
             delivery: 'ASAP',
-            payment: 'Cash',
+            deliveryTime: {hr: 8, min: 0, day: "Today"},
+            payment: 'Cash On Delivery',
             address: '',
             mobile: '',
             street: '',
-            flat: '',
-            deliveryDetails: {
-                hr: 0, min: 0, day: 0
-            }
+            flat: ''
         }
         this.handleRadioChange = this.handleRadioChange.bind(this)
         this.handleSelect = this.handleSelect.bind(this)
@@ -57,6 +56,10 @@ class Checkout extends Component {
         this.buildSummary = this.buildSummary.bind(this)
         this.inputToState = this.inputToState.bind(this)
         this.setHr = this.setHr.bind(this)
+        this.genForm = this.genForm.bind(this)
+        this.genHrs = this.genHrs.bind(this)
+        this.genMins = this.genMins.bind(this)
+        this.genDays = this.genDays.bind(this)
     }
 
       handleSelect(address) {
@@ -69,7 +72,7 @@ class Checkout extends Component {
           .then(({ lat, lng }) => {
             console.log('Success Yay', { lat, lng })
             this.setState({
-              geocodeResults: this.renderGeocodeSuccess(lat, lng),
+//              geocodeResults: {lat: {lat}, lng: {lng}},
               loading: false
             })
           })
@@ -129,14 +132,66 @@ class Checkout extends Component {
         return summary
     }
     
-    setHr(e){
+    setHr(key, e){
         var x = this.state.deliveryTime
-        x.hr = e
+        x[key] = e.target.value
            this.setState({
                deliveryTime: x
            })
     }
+    
+        genHrs(){         
+             var hrs = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"]
+
+             var list = []
+             
+             for (var i in hrs){
+                 list.push(
+                    <option value={hrs[i]}>{hrs[i]}</option>
+                 )
+             }
+             return list
+         }
+        genMins(){         
+                 var mins = ["00", "15", "30", "45"]
+                 var list = []
+
+                 for (var i in mins){
+                     list.push(
+                        <option value={mins[i]}>{mins[i]}</option>
+                     )
+                 }
+                 return list
+        }
+        genDays(){         
+                 var days = ["Today", "Tomorrow", "Day After Tomorrow"]
+                 var list = []
+
+                 for (var i in days){
+                     list.push(
+                        <option value={days[i]}>{days[i]}</option>
+                     )
+                 }
+                 return list
+        }
         
+        genForm(){
+            return (
+             <div className="timeForm">
+                <form>
+                    <select name="hr" onChange={(e) => this.setHr("hr", e)}>
+                        {this.genHrs()}
+                    </select>
+                    <select name="min" onChange={(e) => this.setHr("min", e)}>
+                        {this.genMins()}
+                    </select>
+                    <select className="coDay" name="day" onChange={(e) => this.setHr("day", e)}>
+                        {this.genDays()}
+                    </select>
+               </form>
+            </div> 
+            )
+        }
     
     render()
     {
@@ -164,62 +219,6 @@ class Checkout extends Component {
                 <small className="text-muted">{formattedSuggestion.secondaryText}</small>
             </div>
         )
-        
-        function genHrs(){         
-             var hrs = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"]
-
-             var list = []
-             
-             for (var i in hrs){
-                 list.push(
-                    <option value={hrs[i]}>{hrs[i]}</option>
-                 )
-             }
-             return list
-         }
-    
-        function genMins(){         
-                 var mins = ["00", "15", "30", "45"]
-                 var list = []
-
-                 for (var i in mins){
-                     list.push(
-                        <option value={mins[i]}>{mins[i]}</option>
-                     )
-                 }
-                 return list
-        }
-        
-        function genDays(){         
-                 var days = ["Today", "Tomorrow", "Day After Tomorrow"]
-                 var list = []
-
-                 for (var i in days){
-                     list.push(
-                        <option value={days[i]}>{days[i]}</option>
-                     )
-                 }
-                 return list
-        }
-        
-        
-        function genForm(){
-            return (
-             <div className="timeForm">
-                <form>
-                    <select name="hr" onChange={this.setHr}>
-                        {genHrs()}
-                    </select>
-                    <select name="min" onChange={this.setHr}>
-                        {genMins()}
-                    </select>
-                    <select className="coDay" name="day" onChange={this.setHr}>
-                        {genDays()}
-                    </select>
-               </form>
-            </div> 
-            )
-        }
         
         const cssClasses = {
                 root: 'form-group',
@@ -250,7 +249,7 @@ class Checkout extends Component {
                               null}
                             
                             <input className="checkout-input" onChange={(e) => this.inputToState("flat", e)} type="text" placeholder="Villa/Flat No."></input>
-                            <input className="checkout-input" onChange={(e) => this.inputToState("street", e)} type="text" placeholder="Street"></input>
+                            <input className="checkout-input" onChange={(e) => this.inputToState("street", e)} type="text" placeholder="Street or Landmark"></input>
                         </div>   
                         <h3 className="checkout-sub">Contact Details</h3>
                         <div className="formContainer">
@@ -259,15 +258,15 @@ class Checkout extends Component {
                         </div>
                         <h3 className="checkout-sub">Delivery Time</h3>
                         <RadioGroup className="inCheckout" horizontal onChange={(e) => this.handleRadioChange("delivery", e)}>
-                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="asap">
+                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="ASAP">
                                 As Soon As Possible
                             </RadioButton>
-                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="advance">
+                            <RadioButton padding={15} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value="Advance">
                                 Order in Advance
                             </RadioButton>
                         </RadioGroup>
-                         {this.state.delivery == "advance" ? 
-                            genForm()
+                         {this.state.delivery == "Advance" ? 
+                            this.genForm()
                             : <div/>}
                         <div className="formContainer">
                         </div>

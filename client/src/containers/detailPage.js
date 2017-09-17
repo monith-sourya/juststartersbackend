@@ -6,6 +6,7 @@ import Header from '../containers/detailHeader'
 
 import '../style/detailPage.css'
 
+// Props:
 var product = {
     title: "Portobello Mushroom Burger",
     image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",

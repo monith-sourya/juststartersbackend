@@ -11,7 +11,9 @@ class Card extends Component {
     render()
     {
         return (
-            <div className="cardContainer">
+            <div className="cardContainer" 
+                 onClick={() => this.props.handleClick(this.props.item)}
+                >
                 <div className="cardImageContainer">
                     <img className="cardImage" src={this.props.item.url}/>
                 </div>

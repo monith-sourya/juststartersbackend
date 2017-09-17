@@ -4,6 +4,7 @@ import Card from './components/card'
 import CardContainer from './containers/cardContainer'
 import DetailPage from './containers/detailPage'
 import Checkout from './containers/checkout'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
@@ -13,16 +14,26 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-        <div className="App">
-           {/* <Header/>
-            <section className='cardSection'>
-                <CardContainer/>
-            </section>
-            <DetailPage/>*/}
-            <DetailPage/>
-            <Checkout></Checkout>
-        </div>
-        
+        <BrowserRouter>
+            <div>
+                <Route exact path="/" component={() => (
+                    <div className="App">
+                        <Header/>
+                        <section className='cardSection'>
+                            <CardContainer/>
+                        </section>
+                    </div>
+                    )}></Route>
+
+                 <Route path='/product/' component={() => (
+                    <div className="App">
+                        <DetailPage></DetailPage>
+                    </div>
+                )}/>
+                
+                
+            </div>
+        </BrowserRouter>
     );
   }
 }
