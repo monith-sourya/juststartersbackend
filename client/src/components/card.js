@@ -21,7 +21,7 @@ class Card extends Component {
                     {this.props.item.title}
                 </div>
                 <div className="cardSubtitle">
-                    {this.props.item.subtitle}
+                    AED {this.props.item.price}
                 </div>
             </div>
         )

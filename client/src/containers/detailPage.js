@@ -77,6 +77,10 @@ var product = {
 }
 
 class DetailPage extends Component {
+    componentDidMount () {
+        window.scrollTo(0, 0)
+    }
+    
     constructor(props) {
         super(props)
         this.state = {

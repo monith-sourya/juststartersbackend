@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/db": {
+    "/db/*": {
       "target": "http://localhost:5000"
     }
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "bootstrap": "^3.3.7",
     "input-moment": "^0.3.5",
     "moment": "^2.18.1",
@@ -24,7 +25,9 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.12",
     "redux": "^3.7.2",
-    "redux-form": "^7.0.4"
+    "redux-form": "^7.0.4",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

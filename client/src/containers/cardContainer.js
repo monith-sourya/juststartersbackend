@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Card from '../components/card'
 import '../style/cardContainer.css'
 import {withRouter} from "react-router-dom";
+import {connect} from 'react-redux'
 
 class CardContainer extends Component {
     constructor(props) {
@@ -12,10 +13,15 @@ class CardContainer extends Component {
         }
         this.cardClicked = this.cardClicked.bind(this)
         this.generateList = this.generateList.bind(this)
+        window.scrollTo(0, 0)
     }
     
     generateList(){
-        return this.props.items.map((item) => (
+        if (this.props.items == null){
+            return <div></div>    
+        }
+        console.log("Props", this.props.items)
+        return this.props.items.Products.map((item) => (
                 <Card
                     handleClick={this.cardClicked}
                     item={item}
@@ -41,5 +47,11 @@ class CardContainer extends Component {
     }
 }
 
-export default withRouter(CardContainer)
+function mapStateToProps(state){
+    return {
+        items: state.products
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(CardContainer))
 
