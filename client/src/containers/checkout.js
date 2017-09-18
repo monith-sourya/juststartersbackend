@@ -62,7 +62,7 @@ class Checkout extends Component {
         this.genDays = this.genDays.bind(this)
     }
 
-      handleSelect(address) {
+        handleSelect(address) {
         this.setState({
           address,
           loading: true
@@ -84,35 +84,29 @@ class Checkout extends Component {
             })
           })
       }
-    
-    inputToState(key, e){
+        inputToState(key, e){
         this.setState({[key]: e.target.value})
     }
-
-      handleChange(address) {
+        handleChange(address) {
         this.setState({
           address,
           geocodeResults: null
         })
       }
-
-      renderGeocodeFailure(err) {
+        renderGeocodeFailure(err) {
         return (
           <div className="alert alert-danger" role="alert">
             <strong>Error!</strong> {err}
           </div>
         )
       }
-    
-     handleRadioChange(key,  value) {
+        handleRadioChange(key,  value) {
             this.setState({[key]: value});
-    }
-
-      renderGeocodeSuccess(lat, lng) {
-        console.log(lat, lng);
-      }
-    
-    buildSummary(cart){
+        }
+        renderGeocodeSuccess(lat, lng) {
+            console.log(lat, lng);
+        }
+        buildSummary(cart){
         var summary = []
         cart.map((item) => {
             var options = []
@@ -131,8 +125,7 @@ class Checkout extends Component {
         })
         return summary
     }
-    
-    setHr(key, e){
+        setHr(key, e){
         var x = this.state.deliveryTime
         x[key] = e.target.value
            this.setState({
@@ -173,8 +166,7 @@ class Checkout extends Component {
                      )
                  }
                  return list
-        }
-        
+        }       
         genForm(){
             return (
              <div className="timeForm">

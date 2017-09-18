@@ -1,0 +1,47 @@
+Schema Notes
+
+**** GET --> REDUX ****
+
+Product
+- objectID
+- title
+- subtitle
+- url
+- descr
+- price
+- configs
+
+[Configs]
+- id
+- title
+- [Options]
+
+[Options]
+- subtitle
+- price
+
+**** LOCAL ****
+
+[Cart]
+- title
+- totalPrice
+- custom
+- {options}
+    - id
+        - subtitle
+        - price
+        - title
+
+**** REDUX --> POST ****
+
+Order
+- Cart
+- Location
+    - Address
+    - Street
+    - Flat
+- Contact
+    - Phone
+    - Email
+- Delivery Time
+- Payment

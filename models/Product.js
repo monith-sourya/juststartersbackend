@@ -3,10 +3,18 @@ const {Schema} = mongoose
 
 const productSchema = new Schema ({
     title: String,
-    price: Number,
+    subtitle: String,
     url: String,
-    descr: String
-    // options: [String]
+    descr: String,
+    price: Number,
+    configs: [{
+        id: Number,
+        title: String,
+        options: [{
+            subtitle: String,
+            price: Number
+        }]
+    }]
 })
 
 mongoose.model('products',productSchema)

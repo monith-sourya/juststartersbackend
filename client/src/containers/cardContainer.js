@@ -3,48 +3,6 @@ import Card from '../components/card'
 import '../style/cardContainer.css'
 import {withRouter} from "react-router-dom";
 
-var items = [{
-        url: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Burger",
-        subtitle: "AED 20"
-    },
-    {
-        url: "https://images.pexels.com/photos/196643/pexels-photo-196643.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Salad",
-        subtitle: "AED 10"
-    },{
-        url: "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Pancake",
-        subtitle: "AED 15"
-    },
-    {
-        url: "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Pancake",
-        subtitle: "AED 15"
-    },{
-        url: "https://images.pexels.com/photos/8279/muffin.jpg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Cupcake",
-        subtitle: "AED 5"
-    },
-    {
-        url: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Burger",
-        subtitle: "AED 20"
-    },{
-        url: "https://images.pexels.com/photos/196643/pexels-photo-196643.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Salad",
-        subtitle: "AED 10"
-    },
-    {
-        url: "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Pancake",
-        subtitle: "AED 15"
-    },{
-        url: "https://images.pexels.com/photos/8279/muffin.jpg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Cupcake",
-        subtitle: "AED 5"
-    }]
-
 class CardContainer extends Component {
     constructor(props) {
         super(props);
@@ -57,7 +15,7 @@ class CardContainer extends Component {
     }
     
     generateList(){
-        return items.map((item) => (
+        return this.props.items.map((item) => (
                 <Card
                     handleClick={this.cardClicked}
                     item={item}
@@ -67,7 +25,7 @@ class CardContainer extends Component {
     
     cardClicked(item){
         console.log("User Clicked", item)
-        this.props.history.push('/product')
+        this.props.history.push('/product/')
         // Here we set up redux...
     }
 

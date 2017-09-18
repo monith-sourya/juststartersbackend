@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
+import {withRouter} from "react-router-dom";
 import ProductOptions from '../components/options'
 import Header from '../containers/detailHeader'
 
@@ -119,6 +119,8 @@ class DetailPage extends Component {
         var order = this.state
         console.log(order)
         // Route to Checkout / Menu...
+        this.props.history.push('/checkout/')
+        
     }
     
     render()
@@ -159,4 +161,4 @@ class DetailPage extends Component {
     }
 }
 
-export default DetailPage
+export default withRouter(DetailPage)
