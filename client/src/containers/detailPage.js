@@ -124,7 +124,6 @@ class DetailPage extends Component {
         console.log(order)
         // Route to Checkout / Menu...
         this.props.history.push('/checkout/')
-        
     }
     
     render()
@@ -135,7 +134,7 @@ class DetailPage extends Component {
                             <div className="detailBody">
                 <div className="detailLeft">
                     <div className="detailGallery">
-                        <img className="detailImage" src={product.image}/>
+                        <img className="detailImage" src={product.url}/>
                     </div>
                     <div className="detailText">
                         <h1 className="detailTitle">{product.title}</h1>
@@ -165,4 +164,10 @@ class DetailPage extends Component {
     }
 }
 
-export default withRouter(DetailPage)
+function mapStateToProps(state){
+    return {
+        items: state.products
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(DetailPage))

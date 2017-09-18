@@ -1,0 +1,8 @@
+1. Create GET: products/:id
+2. Action creator to fetch product:id
+3. Reducer to load product to state
+
+1. On card click -> history push './product/id'
+2. Route to product id
+3. Use ownProps in detail page to call fetch(id)
+4. Render

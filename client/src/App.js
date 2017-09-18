@@ -14,53 +14,6 @@ import * as actions from './actions';
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfZTTzUOX6zSmqMAI5I6cEX_r1x6tW1bM&libraries=places&region=AE"></script>
 
-var items = 
-    [{
-        url: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Burger",
-        subtitle: "AED 20"
-    },
-    {
-        url: "https://images.pexels.com/photos/196643/pexels-photo-196643.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Salad",
-        subtitle: "AED 10"
-    },
-     {
-        url: "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Pancake",
-        subtitle: "AED 15"
-    },
-    {
-        url: "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Pancake",
-        subtitle: "AED 15"
-    },
-     {
-        url: "https://images.pexels.com/photos/8279/muffin.jpg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Cupcake",
-        subtitle: "AED 5"
-    },
-    {
-        url: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Burger",
-        subtitle: "AED 20"
-    },
-     {
-        url: "https://images.pexels.com/photos/196643/pexels-photo-196643.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Salad",
-        subtitle: "AED 10"
-    },
-    {
-        url: "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Pancake",
-        subtitle: "AED 15"
-    },
-     {
-        url: "https://images.pexels.com/photos/8279/muffin.jpg?w=1260&h=750&auto=compress&cs=tinysrgb",
-        title: "Cupcake",
-        subtitle: "AED 5"
-    }]
-
 class App extends Component {
   componentDidMount(){
       this.props.fetchProducts()
@@ -79,7 +32,7 @@ class App extends Component {
                         </div>
                     )}></Route>
 
-                 <Route path='/product/' component={() => (
+                 <Route path='/product' component={() => (
                         <DetailPage></DetailPage>
                 )}/>
                 

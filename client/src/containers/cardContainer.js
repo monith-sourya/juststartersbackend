@@ -17,10 +17,9 @@ class CardContainer extends Component {
     }
     
     generateList(){
-        if (this.props.items == null){
+        if (!this.props.items){
             return <div></div>    
         }
-        console.log("Props", this.props.items)
         return this.props.items.Products.map((item) => (
                 <Card
                     handleClick={this.cardClicked}
@@ -33,9 +32,14 @@ class CardContainer extends Component {
         console.log("User Clicked", item)
         this.props.history.push('/product/')
         // Here we set up redux...
+        
     }
 
     render() {
+        if (!this.props.items){
+            return (<div className="loading"></div>)
+        }
+        
         return (
             <div>
                 <div className="cardGrid">

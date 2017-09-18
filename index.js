@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 const keys = require('./config/keys')
+const ObjectId = require('mongodb').ObjectID
 
 require('./models/Product')
 
@@ -214,6 +215,22 @@ app.get('/db/products', (req, res) => {
     })
 });
 
+app.get('/db/products/:id', (req, res) => {
+    var id = req.params.id
+    if (!ObjectId.isValid(id)){
+        return res.status(404).send()
+    }
+
+    Product.findById(id).then((product) => {
+        if (!product){
+            return res.status(404).send()
+        }
+        res.send({product})
+    }).catch((e) => {
+        res.status(400).send()
+    })
+})
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT)
-console.log("Started app on port", PORT)
+console.log("Started backend server on port", PORT)
