@@ -10,13 +10,13 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import {connect} from 'react-redux';
-import * as actions from './actions';
+import {fetchProducts} from './actions';
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfZTTzUOX6zSmqMAI5I6cEX_r1x6tW1bM&libraries=places&region=AE"></script>
 
 class App extends Component {
   componentDidMount(){
-      this.props.fetchProducts()
+      this.props.fetchProducts
   }   
     
   render() {
@@ -32,7 +32,7 @@ class App extends Component {
                         </div>
                     )}></Route>
 
-                 <Route path='/product' component={() => (
+                 <Route path='/product/:id' component={() => (
                         <DetailPage></DetailPage>
                 )}/>
                 
@@ -46,4 +46,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, actions)(App);
+export default connect(null, fetchProducts)(App);

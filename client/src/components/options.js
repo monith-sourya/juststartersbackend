@@ -19,8 +19,9 @@ class ProductOptions extends Component {
         this.getDefaultOptions = this.getDefaultOptions.bind(this)
         this.props.passToParent(defaults, "options")
     }
-    
-     getDefaultOptions(configs){
+
+    getDefaultOptions(configs){
+        console.log("Configs:", configs)
         var list = {}
         for (var i in configs){
             var obj = configs[i].options[0]
@@ -28,9 +29,8 @@ class ProductOptions extends Component {
             list[configs[i].id] = obj
         }
         return list
-        console.log("List", list)
     }
-        
+
     handleRadioChange(title, id, e) {
         e.title = title
         this.setState(
@@ -41,7 +41,7 @@ class ProductOptions extends Component {
             }
         );
     }
-    
+
     generateRadio(opt){
         return opt.map((option) => (
             <RadioButton padding={10} iconSize={1} iconInnerSize={"0"} pointColor="#50E3C2" value={{subtitle: option.subtitle, price: option.price}}>
@@ -49,11 +49,11 @@ class ProductOptions extends Component {
             </RadioButton>
         ))
     }
-    
+
     handleTextArea(e){
         this.props.passToParent(e.target.value, "customOption")
     }
- 
+
     generateList(){
         return this.props.configs.map((option) =>
             (
@@ -66,7 +66,7 @@ class ProductOptions extends Component {
             )
         )
     }
-    
+
     updateTotal(){
         console.log("Update Total")
         var price = 0

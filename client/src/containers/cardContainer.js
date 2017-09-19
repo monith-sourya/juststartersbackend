@@ -29,10 +29,8 @@ class CardContainer extends Component {
     }
     
     cardClicked(item){
-        console.log("User Clicked", item)
-        this.props.history.push('/product/')
-        // Here we set up redux...
-        
+        console.log("User Clicked", item._id)
+        this.props.history.push(`/product/${item._id}`)        
     }
 
     render() {
