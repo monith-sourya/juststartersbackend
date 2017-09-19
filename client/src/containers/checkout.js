@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
+import {withRouter} from "react-router-dom";
+import {bindActionCreators} from 'redux'
 import '../style/checkout.css'
 import DetailHeader from '../containers/detailHeader'
 import OrderSummary from '../components/orderSummary'
@@ -9,6 +10,8 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 
 import { RadioGroup, RadioButton } from 'react-radio-buttons'
 import { Field, reduxForm } from 'redux-form';
+
+import {addToCart} from '../actions/index';
 
 // Props:
 var cart = [
@@ -48,18 +51,20 @@ class Checkout extends Component {
             street: '',
             flat: ''
         }
-        this.handleRadioChange = this.handleRadioChange.bind(this)
-        this.handleSelect = this.handleSelect.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.renderGeocodeFailure = this.renderGeocodeFailure.bind(this)
-        this.renderGeocodeSuccess = this.renderGeocodeSuccess.bind(this)
-        this.buildSummary = this.buildSummary.bind(this)
-        this.inputToState = this.inputToState.bind(this)
-        this.setHr = this.setHr.bind(this)
-        this.genForm = this.genForm.bind(this)
-        this.genHrs = this.genHrs.bind(this)
-        this.genMins = this.genMins.bind(this)
-        this.genDays = this.genDays.bind(this)
+        {
+            this.handleRadioChange = this.handleRadioChange.bind(this)
+            this.handleSelect = this.handleSelect.bind(this)
+            this.handleChange = this.handleChange.bind(this)
+            this.renderGeocodeFailure = this.renderGeocodeFailure.bind(this)
+            this.renderGeocodeSuccess = this.renderGeocodeSuccess.bind(this)
+            this.buildSummary = this.buildSummary.bind(this)
+            this.inputToState = this.inputToState.bind(this)
+            this.setHr = this.setHr.bind(this)
+            this.genForm = this.genForm.bind(this)
+            this.genHrs = this.genHrs.bind(this)
+            this.genMins = this.genMins.bind(this)
+            this.genDays = this.genDays.bind(this)
+        }
     }
 
         handleSelect(address) {
@@ -106,6 +111,7 @@ class Checkout extends Component {
         renderGeocodeSuccess(lat, lng) {
             console.log(lat, lng);
         }
+    
         buildSummary(cart){
         var summary = []
         cart.map((item) => {
@@ -125,6 +131,7 @@ class Checkout extends Component {
         })
         return summary
     }
+        
         setHr(key, e){
         var x = this.state.deliveryTime
         x[key] = e.target.value
@@ -222,6 +229,7 @@ class Checkout extends Component {
             <div>
                 <DetailHeader></DetailHeader>
                 <div className="checkout">
+                <a onClick={() => this.props.history.push('/')}>Back to Menu</a>
                 <h1 className="checkout-header">Confirm your order</h1>
                 <div className="checkout-container">
                     <div className="checkout-left">
@@ -273,7 +281,7 @@ class Checkout extends Component {
                         </RadioGroup>
                         </div>
                     <div className="checkout-right">
-                        <OrderSummary cart={this.buildSummary(cart)}></OrderSummary>
+                        {this.props.cart != [] ? <OrderSummary cart={this.buildSummary(this.props.cart)}></OrderSummary> : <p>Empty Cart...</p>}
                     </div>
                     </div>
                 </div>
@@ -282,4 +290,14 @@ class Checkout extends Component {
     }
 }
 
-export default Checkout
+function mapStateToProps(state){
+    return {
+        cart: state.cart
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({addToCart}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Checkout))

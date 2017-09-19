@@ -3,8 +3,9 @@ import {connect} from 'react-redux'
 import {withRouter} from "react-router-dom";
 import ProductOptions from '../components/options'
 import Header from '../containers/detailHeader'
+import {bindActionCreators} from 'redux'
 
-import {fetchProduct} from '../actions/index';
+import {fetchProduct, addToCart} from '../actions/index';
 
 import '../style/detailPage.css'
 
@@ -29,7 +30,6 @@ class DetailPage extends Component {
         this.setState({
             [key]: value
         })
-        console.log("passToParent")
         if (key == "optionsPrice"){
             var newTotal = this.state.price + value
             this.setState({
@@ -48,11 +48,17 @@ class DetailPage extends Component {
         console.log("List", list)
     }
     
-    completeOrder(){
-        console.log("Product added to order")
+    completeOrder(){        
+        var total = this.state.optionsPrice + this.props.product.price
+        
+        var cartObject = {
+            title: this.props.product.title,
+            totalPrice: total,
+            options: this.state.options,
+            custom: this.state.customOption
+        }
         // Redux will pass to store
-        var order = this.state
-        console.log(order)
+        this.props.addToCart(cartObject)
         // Route to Checkout / Menu...
         this.props.history.push('/checkout/')
     }
@@ -60,7 +66,6 @@ class DetailPage extends Component {
     render()
     {
         if (!this.props.product){
-            console.log("Still Loading")
             return (
                 <div>
                     <Header></Header>
@@ -68,9 +73,6 @@ class DetailPage extends Component {
                 </div>
             )
         }
-        console.log("Finished Loaded")
-        console.log(this.props.product)
-
         return (
             <div>
                 <Header></Header>
@@ -113,4 +115,8 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {fetchProduct})(withRouter(DetailPage))
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({fetchProduct, addToCart}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DetailPage))
