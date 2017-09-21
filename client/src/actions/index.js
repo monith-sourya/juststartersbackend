@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {FETCH_PRODUCTS, FETCH_PRODUCT, ADD_TO_CART} from './types' 
+import {FETCH_PRODUCTS, FETCH_PRODUCT, ADD_TO_CART, REMOVE_FROM_CART} from './types' 
 
 // We use middlewares for the dispatch stuff w/ async network requests
 
@@ -28,6 +28,13 @@ export function fetchProduct(id){
 export function addToCart(product){
     return {
         type: ADD_TO_CART,
+        payload: product
+    }
+}
+
+export function removeFromCart(product){
+    return {
+        type: REMOVE_FROM_CART,
         payload: product
     }
 }

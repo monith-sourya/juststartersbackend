@@ -8,16 +8,24 @@ class OrderSummary extends Component {
         super(props)
         this.generateList = this.generateList.bind(this)
         this.generateOptions = this.generateOptions.bind(this)
+        this.computeSubtotal = this.computeSubtotal.bind(this)
         this.state = {
             subtotal: 0,
             deliveryCharge: 10
         }
     }
     
+    computeSubtotal(){
+        var subTotal = 0
+        this.props.cart.map((option) => {
+            subTotal += option.price
+        })
+        return subTotal
+    }
+    
     generateList(){
-        return this.props.cart.map((option) => {
-                this.state.subtotal += option.price
-                return (
+        return this.props.cart.map((option, index) => {
+            return (
                     <div className="order-item-div">
                         <div className="order-title">
                             <div className="order-name">
@@ -29,7 +37,7 @@ class OrderSummary extends Component {
                         </div>
                         <div className="order-price">
                             AED {option.price}
-                            <a className="remove-cart">×</a>
+                            <a onClick={() => this.props.removeFunc(index)}className="remove-cart">×</a>
                         </div>
                     </div>
                 )
@@ -79,7 +87,7 @@ class OrderSummary extends Component {
                     </div>
                 </div>
                 <div className="order-price-final">
-                    AED {this.state.subtotal + this.state.deliveryCharge}
+                    AED {this.computeSubtotal() +  this.state.deliveryCharge}
                 </div>
             </div>
         </div>

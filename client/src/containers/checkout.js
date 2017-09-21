@@ -11,7 +11,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 import { RadioGroup, RadioButton } from 'react-radio-buttons'
 import { Field, reduxForm } from 'redux-form';
 
-import {addToCart} from '../actions/index';
+import {addToCart, removeFromCart} from '../actions/index';
 
 class Checkout extends Component {
      constructor(props) {
@@ -42,7 +42,6 @@ class Checkout extends Component {
             this.genDays = this.genDays.bind(this)
         }
     }
-
         handleSelect(address) {
         this.setState({
           address,
@@ -260,7 +259,7 @@ class Checkout extends Component {
                         </RadioGroup>*/}
                         </div>
                     <div className="checkout-right">
-                        {this.props.cart.length != 0 ? <OrderSummary cart={this.buildSummary(this.props.cart)}></OrderSummary> : <h3 className="checkout-sub">Hmm... Your cart is empty. <br/><br/>Why don't you check out our menu?</h3>}
+                        {this.props.cart.length != 0 ? <OrderSummary cart={this.buildSummary(this.props.cart)} removeFunc={this.props.removeFromCart}></OrderSummary> : <h3 className="checkout-sub">Hmm... Your cart is empty. <br/><br/>Why don't you check out our menu?</h3>}
                     </div>
                     </div>
                 </div>
@@ -276,7 +275,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({addToCart}, dispatch)
+    return bindActionCreators({addToCart, removeFromCart}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Checkout))
