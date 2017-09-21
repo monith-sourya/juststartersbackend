@@ -1,3 +1,20 @@
+TODO:
+1. HTML/CSS for deleting cart items.
+2. Redux for the same.
+
+1. Generic modal component
+2. Confirmation modals
+
+Edge Cases:
+1. Empty Cart -> Checkout
+2. From validation
+
+1. Order confirmation and POST method
+2. Web hooks for email confirmation
+
+1. Full scale UI clean up
+
+DONE:
 1. Create GET: products/:id
 2. Action creator to fetch product:id
 3. Reducer to load product to state

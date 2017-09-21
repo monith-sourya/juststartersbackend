@@ -13,30 +13,6 @@ import { Field, reduxForm } from 'redux-form';
 
 import {addToCart} from '../actions/index';
 
-// Props:
-var cart = [
-    {
-        title: "Portobello Mushroom Burger",
-        totalPrice: 85,
-        customOption: "",
-        options: {
-            0: {subtitle: "For 4", price: 0, title: "Choose you Serving"},
-            1:  {subtitle: "Beef", price: 0, title: "Pick a Meat"},
-            2: {subtitle: "No thanks", price: 0, title: "Add a Side"}
-        }
-    },
-    {
-        title: "Samosa Chaat",
-        totalPrice: 35,
-        customOption: "",
-        options: {
-            0: {subtitle: "For 8", price: 0, title: "Choose you Serving"},
-            1:  {subtitle: "Pickle", price: 0, title: "Pick a Meat"},
-            2: {subtitle: "Coca-Cola", price: 0, title: "Add a Side"}
-        }
-    }
-]
-
 class Checkout extends Component {
      constructor(props) {
         super(props)
@@ -271,17 +247,20 @@ class Checkout extends Component {
                         <div className="formContainer">
                         </div>
                         <h3 className="checkout-sub">Payment Method</h3>
-                        <RadioGroup className="inCheckout" horizontal onChange={(e) => this.handleRadioChange("payment", e)}>
+                        <RadioButton padding="15" iconSize="1" iconInnerSize="0" rootColor="#50E3C2" value="cash">
+                                Cash On Delivery
+                        </RadioButton>
+                        {/*<RadioGroup className="inCheckout" horizontal onChange={(e) => this.handleRadioChange("payment", e)}>
                             <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="cash">
                                 Cash On Delivery
                             </RadioButton>
                             <RadioButton padding="15" iconSize="1" iconInnerSize="0" pointColor="#50E3C2" value="card">
                                 Pay by Card
                             </RadioButton>
-                        </RadioGroup>
+                        </RadioGroup>*/}
                         </div>
                     <div className="checkout-right">
-                        {this.props.cart != [] ? <OrderSummary cart={this.buildSummary(this.props.cart)}></OrderSummary> : <p>Empty Cart...</p>}
+                        {this.props.cart.length != 0 ? <OrderSummary cart={this.buildSummary(this.props.cart)}></OrderSummary> : <h3 className="checkout-sub">Hmm... Your cart is empty. <br/><br/>Why don't you check out our menu?</h3>}
                     </div>
                     </div>
                 </div>

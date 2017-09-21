@@ -9,7 +9,7 @@
 }
 
 .order{
-    width: 225px;
+/*    width: 225px;*/
 }
 
 .final{
@@ -23,18 +23,16 @@
     font-size: 1.8em;
 }
 
-
-
 .order-title{
-    display: flex;
-    width: 100%;
-    justify-content: flex-start;
     align-items: center;
+    font-weight: 200;
+/*    background-color: aliceblue;*/
+    flex: 3;
 }
 
 .order-title-final{
     display: flex;
-    width: 100%;
+/*    width: 100%;*/
     justify-content: flex-start;
     align-items: center;
     font-size: 1em;
@@ -42,31 +40,38 @@
 
 .order-price-final{
     font-size: 1.4em;
-    flex: 1;
     font-weight: 400;
     text-align: right;
+    flex: 4;
+    margin-top: 2px;
 }
 
 .order-name-final{
     text-align: left;
-    flex: 1;
     font-weight: 400;
     font-size: 1.5em;
+    flex: 1;
 }
 
 .finalSummary{
-   padding-top: 15px; 
+   padding-top: 5px; 
 }
 
 .order-name{
     text-align: left;
-    flex: 2; 
 }
 
 .order-item-div{
-    width: 225px;
+    width: 250px;
     font-size: 1.2em;
+    display: flex;
     padding-bottom: 10px;
+    align-items: flex-start;
+/*
+    border-bottom: 1px;
+    border-bottom-color: black;
+    border-bottom-style: solid;
+*/
 }
 
 .order-price{
@@ -74,10 +79,23 @@
     font-size: 0.9em;
     color: grey;
     flex: 1;
-    text-align: right;
+    margin-top: 2px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.lastSummary{
+    margin-top: -5px;
+}
+
+.devCharge{
+    flex: 2;
 }
 
 .order-details{
+    display: flex;
+    flex-direction: column;
     list-style-type: none;
     padding-left: 0px;
     color: gray;
@@ -93,4 +111,11 @@
     font-size: 1.2em;
     font-weight: 300;
     line-height: 1.5;
+}
+
+.remove-cart{
+    font-size: 1.4em;
+    color: grey;
+    font-weight: 400;
+    margin-top: -5px;
 }

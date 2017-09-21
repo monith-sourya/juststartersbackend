@@ -50,7 +50,7 @@ class DetailPage extends Component {
     
     completeOrder(){        
         var total = this.state.optionsPrice + this.props.product.price
-        
+        console.log("Total", total)
         var cartObject = {
             title: this.props.product.title,
             totalPrice: total,
